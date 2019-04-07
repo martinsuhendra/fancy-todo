@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--Google meta-->
+    <meta name="google-signin-client_id" content="301492189565-7ai6s47nqe7ve3ntftdmfoif7buggcdt.apps.googleusercontent.com">
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <!--Import materialize.css-->
+    <!-- <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/> -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    
+    
+    <title>Limme Do it!</title>
+    <style>
+        body { background-color: #e3c4a8;}
+        #zero-todo {
+            font-family: Pacifico;
+            margin: 0 auto;
+            position: fixed;
+            top: 17%;
+            left: 20%;
+            margin-top: -50px;
+            margin-left: -100px;
+        }
+        #login {
+            font-family: Pacifico;
+            color : black;
+            margin: 0 auto;
+            position: fixed;
+            top: 30%;
+            left: 45%;
+            margin-top: -50px;
+            margin-left: -100px;
+        }
+        #register {
+            font-family: Pacifico;
+            color : black;
+            margin: 0 auto;
+            position: fixed;
+            top: 20%;
+            left: 45%;
+            margin-top: -50px;
+            margin-left: -100px;
+        }
+
+        .waves-effect{
+            left: 31%
+        }
+
+        .g-signin2 {
+            margin-left: 84px;
+            padding: 10px
+        }
+
+        #submit-btn {
+            margin-left: -21%
+        }
+
+        #register-submit-btn {
+            margin-left: -11%
+        }
+
+        #todo {
+            font-family: Pacifico;
+            color : black;
+            margin: 0 auto;
+            position: fixed;
+            top: 10%;
+            left: 20%;
+            margin-top: -50px;
+            margin-left: -100px;        
+        }
+
+        #todo .row {
+            margin-top: 7%;
+            font-weight: 100;
+            font-stretch: expanded;
+        }
+
+        th {
+            font-size: 10pt;
+        }
+
+        td {
+            font-size: 8pt
+        }
+
+        .modal-footer{
+            margin-left: -120px;
+        }
+
+        .timepicker-modal {
+            width: 150%
+        }
+
+        .datepicker-modal {
+            width: 150%
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="fixed-action-btn" id="action-btn">
+        <a class="btn-floating btn-large red">
+            <i class="large material-icons">mode_edit</i>
+        </a>
+        <ul>
+            <li><a class="btn-floating yellow darken-1 modal-trigger" href="#modal1"><i class="material-icons">note_add</i></a></li>
+            <li><a class="btn-floating blue darken-1"><i class="material-icons">access_alarm</i></a></li>
+            <li><a class="btn-floating red" id="logout-btn" onclick="signOut()"><i class="material-icons">cancel</i></a></li>
+        </ul>
+    </div>
+
+    <div id="main-cotainer">
+        <!--LOGIN FORM-->
+        <div id="login">
+            <h1 class="form-login" id="manual">Limme do it</h1>
+            <br>
+            <form id="manual" onsubmit="manualLogin()">
+                <div class="input-field col s16">
+                        <input id="email" type="email" class="validate" autocomplete="off">
+                        <label for="email">Email</label>
+                    </div>
+                <div class="input-field col s16">
+                    <input id="password" type="password" class="validate">
+                    <label for="password">Password</label>
+                </div>
+                <button class="btn waves-effect waves-light" type="submit" name="action" id="submit-btn">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+                <button class="btn waves-effect waves-light"  type="button" name="action" id="register-btn">Register
+                        <i class="material-icons right">cloud</i>
+                </button>
+            </form>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        </div>
+        <!--REGISTER-->
+        <div class="container">
+            <div class="row" id="register">
+                <h1 class="form-login" id="register-manual" style="margin-left:15%">Register</h1>
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s16">
+                            <input id="first_name" type="text" class="validate" autocomplete="off">
+                            <label for="first_name">First Name</label>
+                        </div>
+                        <div class="input-field col s16">
+                            <input id="last_name" type="text" class="validate" autocomplete="off">
+                            <label for="last_name">Last Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field">
+                            <input id="new-password" type="password" class="validate" autocomplete="off">
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field">
+                            <input id="new-email" type="email" class="validate" autocomplete="off">
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+                    <button class="btn waves-effect waves-light" type="submit" name="action" id="register-submit-btn" onclick="register()">Submit
+                        <i class="material-icons right">send</i>
+                    </button>
+                    <button class="btn waves-effect waves-light"  type="button" name="action" id="back-btn">Back
+                        <i class="material-icons right">cloud</i>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <!-- ToDo -->
+        <div id="zero-todo"> <h3 class="centered">hmmmmm, You dont have any task on your list . . . <i><br><br>limme do it one for you . . .</i></h3></div>
+        <div class="container" id="todo">
+            <div class="row">
+                <div class="col s10"> <h3>Todo List . . .</h3></div>
+                <div class="col s2">
+                    <div>
+
+                        <iframe scrolling="no" frameborder="no" clocktype="html5" style="overflow:hidden;border:0;margin:0;padding:0;width:120px;height:40px;"src="https://www.clocklink.com/html5embed.php?clock=043&timezone=GMT0700&color=black&size=120&Title=&Message=&Target=&From=2019,1,1,0,0,0&Color=black"></iframe>
+                    </div>
+                </div>
+            </div>
+           
+            <table class="responsive-table striped">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>To Do</th>
+                        <th>Created At</th>
+                        <th>Completed At</th>
+                        <th>Description</th>
+                        <th>Due Date</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody id="todo-content">
+                    <!--To do Here...-->
+                </tbody>
+            </table>
+        </div>
+
+          <!-- Modal Structure -->
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                        Input Title:
+                                        <div class="input-field inline">
+                                          <input id="title" type="text">
+                                          <label for="title"><Title></Title></label>
+                                        </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s6" >
+                                        <input type="text" class="datepicker" placeholder="Date" id="dueDate">
+                                    </div>
+                                    <div class="input-field col s6">
+                                        <input type="text" class="timepicker" placeholder="Time" id="dueTime">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <textarea id="description" class="materialize-textarea"></textarea>
+                                            <label for="description">Description</label>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="#!" class="modal-close waves-effect waves-green btn-flat" onclick="addTodo()">Add Notes</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    
+    </div>
+      <!-- Compiled and minified JavaScript -->
+      <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+      </script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
+      <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+      <!--Google-->
+      <script src="https://apis.google.com/js/platform.js" async defer></script>
+      <script src="js/script.js"></script>
+      <script>
+          const floating = document.querySelectorAll('.fixed-action-btn');
+          M.FloatingActionButton.init(floating);
+      </script>
+      <script>
+           const date = document.querySelectorAll('.datepicker');
+           M.Datepicker.init(date, {
+               format: `dddd, dd mmmm yyyy`
+           });
+      </script>
+      <script>
+          const time = document.querySelectorAll('.timepicker');
+          M.Timepicker.init(time);
+      </script>
+      <script>
+          const modals = document.querySelectorAll('.modal');
+          M.Modal.init(modals);   
+      </script>
+      <script>
+            AOS.init();
+      </script>   
+</body>
+</html>
